@@ -13,7 +13,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.eon.applypayment.vo.ApplyPaymentStatusEvents;
+import com.eon.applypayment.vo.ApplyPaymentStatusEvent;
 
 @EnableKafka
 @Configuration
@@ -22,18 +22,20 @@ public class KafkaConsumerConfig {
 	@Value(value = "${kafka.bootstrapAddress}")
 	private String bootstrapAddress;
 
-	public DefaultKafkaConsumerFactory<String, ApplyPaymentStatusEvents> midosStubtConsumerFactory() {
+	
+
+	public DefaultKafkaConsumerFactory<String, ApplyPaymentStatusEvent> midosStubtConsumerFactory() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "group-id");
 		props.put("value.deserializer", "com.eon.applypayment.config.ApplicationDeserializer");
 		return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-				new JsonDeserializer<>(ApplyPaymentStatusEvents.class));
+				new JsonDeserializer<>(ApplyPaymentStatusEvent.class));
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvents> midosStubListenerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvents> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> midosStubListenerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(midosStubtConsumerFactory());
 		return factory;
 	}

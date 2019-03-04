@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.eon.applypayment.util.Utilz;
 import com.eon.applypayment.vo.ApplyPaymentStatusEvent;
 import com.eon.applypayment.vo.PostBalanceRequest;
 import com.eon.applypayment.vo.PostUtrnRequest;
@@ -60,9 +61,9 @@ public class MidosStubService {
 				applyPaymentStatusEvent.toString());
 		com.eon.applypayment.vo.UtrnAppliedConfirmationRequest request = new com.eon.applypayment.vo.UtrnAppliedConfirmationRequest();
 		request.setPaygProductId(applyPaymentStatusEvent.getPaygProductId());
-		request.setTransactionId(getUtrnId());
+		request.setTransactionId(applyPaymentStatusEvent.getTransactionId());
 		request.setUtrn(applyPaymentStatusEvent.getUtrn());
-		request.setValue(Float.valueOf(10.0f));
+		request.setValue(Float.valueOf(applyPaymentStatusEvent.getValue()));
 		return request;
 	}
 
@@ -87,9 +88,8 @@ public class MidosStubService {
 		balanceRequest.setPaygProductId(applyPaymentStatusEvent.getPaygProductId());
 		balanceRequest.setReason(applyPaymentStatusEvent.getReason());
 		balanceRequest.setTransactionId(applyPaymentStatusEvent.getTransactionId());
-
-		balanceRequest.setMeterBalance(applyPaymentStatusEvent.getMeterBalance());
-		balanceRequest.setMeterBalanceDate(applyPaymentStatusEvent.getMeterBalanceDateTime());
+		balanceRequest.setMeterBalance(300);
+		balanceRequest.setMeterBalanceDate(Utilz.getCurrentDate());
 		return balanceRequest;
 	}
 

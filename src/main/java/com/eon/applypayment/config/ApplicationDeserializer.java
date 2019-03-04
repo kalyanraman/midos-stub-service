@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.eon.applypayment.vo.ApplyPaymentStatusEvents;
+import com.eon.applypayment.vo.ApplyPaymentStatusEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ApplicationDeserializer implements Deserializer {
@@ -17,11 +17,11 @@ public class ApplicationDeserializer implements Deserializer {
 	}
 
 	@Override
-	public ApplyPaymentStatusEvents deserialize(String arg0, byte[] arg1) {
+	public ApplyPaymentStatusEvent deserialize(String arg0, byte[] arg1) {
 		ObjectMapper mapper = new ObjectMapper();
-		ApplyPaymentStatusEvents applyPaymentStatusEvents = null;
+		ApplyPaymentStatusEvent applyPaymentStatusEvents = null;
 		try {
-			applyPaymentStatusEvents = mapper.readValue(arg1, ApplyPaymentStatusEvents.class);
+			applyPaymentStatusEvents = mapper.readValue(arg1, ApplyPaymentStatusEvent.class);
 		} catch (Exception e) {
 			logger.error("Error occurred at ApplicationDeserializer of ApplyPaymentStatusEvents method  :{}",
 					e.getMessage());
