@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import com.eon.applypayment.util.ApplyPaymentStatus;
-import com.eon.applypayment.vo.ApplyPaymentStatusEvent;
+import com.eon.applypayment.vo.ApplyPaymentStatusEvents;
 
 @Component
 public class MidosStubListener {
@@ -17,7 +17,7 @@ public class MidosStubListener {
 	private MidosStubService midosStubService;
 
 	@KafkaListener(topics = "${kafka.applyPaymentStatus.topic}", containerFactory = "midosStubListenerFactory", groupId = "group-id")
-	public void applyPaymentStatusEventListener(ApplyPaymentStatusEvent applyPaymentStatusEvent) {
+	public void applyPaymentStatusEventListener(ApplyPaymentStatusEvents applyPaymentStatusEvent) {
 		logger.info("MidosStubListener class of applyPaymentStatusEventListener method start :{}",
 				applyPaymentStatusEvent.toString());
 		applyPaymentUtrnRequested(applyPaymentStatusEvent);
@@ -26,25 +26,34 @@ public class MidosStubListener {
 
 	}
 
-	private void meeterBlanceApplied(ApplyPaymentStatusEvent applyPaymentStatusEvent) {
-		if (ApplyPaymentStatus.UtrnApplied.toString().equals(applyPaymentStatusEvent.getEventType())) {
-			midosStubService.meeterBlanceAppliedService(applyPaymentStatusEvent);
+	private void meeterBlanceApplied(ApplyPaymentStatusEvents applyPaymentStatusEvents) {
+		logger.info("MidosStubListener class of meeterBlanceApplied method start :{}",
+				applyPaymentStatusEvents.toString());
+		if (ApplyPaymentStatus.UtrnApplied.toString()
+				.equals(applyPaymentStatusEvents.getApplyPaymentStatusEvent().getEventType())) {
+			midosStubService.meeterBlanceAppliedService(applyPaymentStatusEvents.getApplyPaymentStatusEvent());
 
 		}
 
 	}
 
-	private void applyPaymentUtrnApplied(ApplyPaymentStatusEvent applyPaymentStatusEvent) {
-		if (ApplyPaymentStatus.ApplyUtrnRequested.toString().equals(applyPaymentStatusEvent.getEventType())) {
-			midosStubService.appPaymentUtrnAppliedService(applyPaymentStatusEvent);
+	private void applyPaymentUtrnApplied(ApplyPaymentStatusEvents applyPaymentStatusEvents) {
+		logger.info("MidosStubListener class of applyPaymentUtrnApplied method start :{}",
+				applyPaymentStatusEvents.toString());
+		if (ApplyPaymentStatus.ApplyUtrnRequested.toString()
+				.equals(applyPaymentStatusEvents.getApplyPaymentStatusEvent().getEventType())) {
+			midosStubService.appPaymentUtrnAppliedService(applyPaymentStatusEvents.getApplyPaymentStatusEvent());
 
 		}
 
 	}
 
-	private void applyPaymentUtrnRequested(ApplyPaymentStatusEvent applyPaymentStatusEvent) {
-		if (ApplyPaymentStatus.PaymentUtrnRequested.toString().equals(applyPaymentStatusEvent.getEventType())) {
-			midosStubService.appPaymentUtrnRequestedService(applyPaymentStatusEvent);
+	private void applyPaymentUtrnRequested(ApplyPaymentStatusEvents applyPaymentStatusEvents) {
+		logger.info("MidosStubListener class of applyPaymentUtrnRequested method start :{}",
+				applyPaymentStatusEvents.toString());
+		if (ApplyPaymentStatus.PaymentUtrnRequested.toString()
+				.equals(applyPaymentStatusEvents.getApplyPaymentStatusEvent().getEventType())) {
+			midosStubService.appPaymentUtrnRequestedService(applyPaymentStatusEvents.getApplyPaymentStatusEvent());
 
 		}
 	}
