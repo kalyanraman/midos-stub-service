@@ -67,12 +67,6 @@ public class MidosStubService {
 		return request;
 	}
 
-	public static String getUtrnId() {
-		Random rnd = new Random();
-		int number = rnd.nextInt(9999999);
-		return String.format("%07d", number);
-	}
-
 	public void meeterBlanceAppliedService(ApplyPaymentStatusEvent applyPaymentStatusEvent) {
 		logger.info("MidosStubService class of meeterBlanceAppliedService method start :{}",
 				applyPaymentStatusEvent.toString());
@@ -93,4 +87,9 @@ public class MidosStubService {
 		return balanceRequest;
 	}
 
+	public static String getUtrnId() {
+		Random rnd = new Random();
+		int number = rnd.nextInt(9999999);
+		return String.format("%07d", number);
+	}
 }

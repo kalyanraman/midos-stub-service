@@ -22,8 +22,6 @@ public class KafkaConsumerConfig {
 	@Value(value = "${kafka.bootstrapAddress}")
 	private String bootstrapAddress;
 
-	
-
 	public DefaultKafkaConsumerFactory<String, ApplyPaymentStatusEvent> midosStubtConsumerFactory() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
@@ -37,6 +35,7 @@ public class KafkaConsumerConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> midosStubListenerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(midosStubtConsumerFactory());
+		factory.setConcurrency(3);
 		return factory;
 	}
 
