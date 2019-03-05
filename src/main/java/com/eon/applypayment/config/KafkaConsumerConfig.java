@@ -35,7 +35,7 @@ public class KafkaConsumerConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> midosStubListenerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, ApplyPaymentStatusEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(midosStubtConsumerFactory());
-		factory.setConcurrency(3);
+		factory.setConcurrency(1);
 		return factory;
 	}
 

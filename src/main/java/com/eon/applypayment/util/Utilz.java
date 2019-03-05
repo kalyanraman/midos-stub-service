@@ -6,7 +6,7 @@ import java.util.Date;
 public class Utilz {
 
 	public static String getCurrentDate(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:Ss");
 		return sdf.format(new Date());
 	}
 }
