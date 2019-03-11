@@ -17,6 +17,13 @@ import com.eon.applypayment.vo.PostUtrnRequest;
 @Service
 public class MidosStubService {
 
+	@Value("${baseBalance}")
+	private float baseBalance;
+	
+	@Value("${balanceApplicationFactor}")
+	private float balanceApplicationFactor;
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(MidosStubService.class);
 	@Autowired
 	RestTemplate restTemplate;
@@ -82,7 +89,9 @@ public class MidosStubService {
 		balanceRequest.setPaygProductId(applyPaymentStatusEvent.getPaygProductId());
 		balanceRequest.setReason(applyPaymentStatusEvent.getReason());
 		balanceRequest.setTransactionId(applyPaymentStatusEvent.getTransactionId());
-		balanceRequest.setMeterBalance(300);
+		balanceRequest.setMeterBalance(baseBalance+
+				balanceApplicationFactor*Float.parseFloat(applyPaymentStatusEvent.getValue()));
+		System.out.println("Meter balance - "+balanceRequest.getMeterBalance());
 		balanceRequest.setMeterBalanceDate(Utilz.getCurrentDate());
 		return balanceRequest;
 	}
